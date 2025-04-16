@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: emerald --default;
+}
+
+@layer components {
+  .no-focus:focus,
+  .no-focus:focus-within {
+    @apply !ring-0 !outline-none !shadow-none;
+  }
+}
