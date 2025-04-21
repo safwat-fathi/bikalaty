@@ -51,7 +51,7 @@ const UserTypeSelector = ({ open, onClose }: { open: boolean; onClose: () => voi
 
         <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-3">
           <UserTypeOption
-            type="customer"
+            type={UserType.Customer}
             title="Home User"
             description="Shopping for your household"
             icon={
@@ -74,7 +74,7 @@ const UserTypeSelector = ({ open, onClose }: { open: boolean; onClose: () => voi
           />
 
           <UserTypeOption
-            type="retailer"
+            type={UserType.Retailer}
             title="Retailer"
             description="For small shops and stores"
             icon={
@@ -100,7 +100,7 @@ const UserTypeSelector = ({ open, onClose }: { open: boolean; onClose: () => voi
           />
 
           <UserTypeOption
-            type="wholesaler"
+            type={UserType.Wholesaler}
             title="Wholesaler"
             description="For bulk purchases"
             icon={

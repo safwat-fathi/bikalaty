@@ -4,8 +4,6 @@ import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffe
 
 import { User, UserType } from "@/types/models/user.model";
 
-import useLocalStorage from "../hooks/useLocalStorage";
-
 type UserProviderContext = {
   user: User | null;
   userType: UserType;
@@ -27,7 +25,7 @@ export const useUser = () => {
 
 export const UserProvider = ({ children, user }: { children: ReactNode; user: User | null }) => {
   const [showTypeSelector, setShowTypeSelector] = useState(false);
-  const [userType, setUserType] = useLocalStorage<UserType>("userType", "customer");
+  const [userType, setUserType] = useState<UserType>(UserType.Wholesaler);
 
   const handleChangeUserType = (newUserType: UserType) => {
     if (newUserType === userType) return;

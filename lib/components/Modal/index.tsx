@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import { ReactNode, useEffect, useRef } from "react";
 
 interface ModalProps {
@@ -37,7 +38,7 @@ const Modal = ({ title, isOpen, fixed = false, onClose, children }: ModalProps) 
   }, [isOpen, onClose]);
 
   return (
-    <dialog ref={ref} className="modal" onClick={fixed ? undefined : onClose}>
+    <dialog ref={ref} className={clsx("modal", { hidden: !isOpen })} onClick={fixed ? undefined : onClose}>
       <div className="modal-box" onClick={(e) => e.stopPropagation()}>
         <form method="dialog" className="modal-backdrop mb-4 flex items-center justify-between">
           <h2 className="m-0 text-2xl font-bold text-black">{title}</h2>

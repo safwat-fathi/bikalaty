@@ -8,3 +8,5 @@ export type ThemeVariant =
   | "success"
   | "warning"
   | "error";
+
+export type ThemeSize = "xs" | "sm" | "md" | "lg" | "xl";

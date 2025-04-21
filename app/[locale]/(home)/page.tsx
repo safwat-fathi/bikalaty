@@ -1,8 +1,9 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 import { getScopedI18n } from "@/locales/server";
 
-import Test from "./components/Test";
+import FeaturedProductsCard from "./components/FeaturedProductsCard";
 import UserType from "./components/UserType";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -21,7 +22,9 @@ export default async function Home() {
     <>
       <h1>{tHome("title")}</h1>
       <p>{tHome("description")}</p>
-      <Test />
+      <Suspense fallback={<div>Loading...</div>}>
+        <FeaturedProductsCard />
+      </Suspense>
       <UserType />
     </>
   );

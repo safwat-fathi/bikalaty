@@ -9,32 +9,29 @@ import { useCart } from "@/lib/providers/cart.provider";
 
 import Button from "../Button";
 
-interface CartPreviewProps {
-  cartItems: any[];
-}
-
-const CartPreview = ({ cartItems }: CartPreviewProps) => {
-  const { cartSubTotal, incrementQuantity, decrementQuantity } = useCart();
+const CartPreview = () => {
+  const { cart, cartSubTotal, incrementQuantity, decrementQuantity, removeFromCart } = useCart();
 
   return (
     <>
       <div className="max-h-[50vh] flex-1 overflow-y-auto p-4">
-        {cartItems.length > 0 ? (
+        {cart.length > 0 ? (
           <div className="space-y-4">
-            {cartItems.map((item) => (
+            {cart.map((item) => (
               <div key={item.id} className="flex items-center space-x-4 border-b border-gray-100 pb-4">
                 <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md bg-gray-100">
                   <Image
-                    src={item.image}
+                    src={item.image || "/img-placeholder.svg"}
                     alt={item.name}
-                    width={100}
-                    height={100}
+                    width={25}
+                    height={25}
                     className="h-full w-full object-cover"
+                    priority={false}
                   />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-medium">{item.name}</h3>
-                  <div className="mt-1 flex items-center">
+                  <div className="mt-1 flex items-center justify-between">
                     <div className="flex items-center rounded-md border">
                       <button
                         className="cursor-pointer px-2 py-1 text-gray-500 hover:text-gray-700"
@@ -50,7 +47,17 @@ const CartPreview = ({ cartItems }: CartPreviewProps) => {
                         +
                       </button>
                     </div>
-                    <span className="ml-auto font-medium">${(item.price * item.quantity).toFixed(2)}</span>
+                    <div className="flex items-center gap-1">
+                      <span className="font-medium">${(item.price * item.quantity).toFixed(2)}</span>
+                      <Button
+                        variant="ghost"
+                        className="btn-sm min-h-auto text-red-500 hover:text-red-600"
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => removeFromCart(item)}
+                      >
+                        Remove
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -61,12 +68,11 @@ const CartPreview = ({ cartItems }: CartPreviewProps) => {
             <ShoppingCartIcon className="mx-auto mb-4 h-12 w-12 text-gray-300" />
             <h3 className="mb-2 text-lg font-medium">Your cart is empty</h3>
             <p className="mb-4 text-gray-500">Start adding items to your cart!</p>
-            {/* <Button onClick={handleClose}>Start Shopping</Button> */}
           </div>
         )}
       </div>
 
-      {cartItems.length > 0 && (
+      {cart.length > 0 && (
         <div className="border-t px-4 py-2">
           <div className="flex justify-between">
             <span className="text-gray-600">Subtotal</span>

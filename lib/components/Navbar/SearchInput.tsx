@@ -16,7 +16,7 @@ const SearchInput = () => {
   return (
     <div className="flex">
       <Select
-        className="no-focus h-full w-32 rounded-r-none border-r-0 border-gray-300 bg-amber-200"
+        className="no-focus bg-primary h-full w-32 rounded-r-none border-r-0 border-gray-300"
         options={[
           { label: "All", value: "all" },
           { label: "Any", value: "any" },
@@ -26,7 +26,7 @@ const SearchInput = () => {
         onChange={(e) => setCategory(e.target.value)}
       />
       <Autocomplete
-        containerClassName="w-[20rem]"
+        containerClassName="w-full"
         inputCLassName="border-l-0 rounded-l-none no-focus border-gray-300"
         placeholder="Search for products"
         historyKey="search"

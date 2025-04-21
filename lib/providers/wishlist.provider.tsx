@@ -1,11 +1,9 @@
-import { createContext, type ReactNode, useContext, useMemo } from "react";
-
-import useLocalStorage from "../hooks/useLocalStorage";
+import { createContext, type ReactNode, useContext, useMemo, useState } from "react";
 
 interface WishlistProviderContext {
-  wishlist: any;
+  wishlist: any[];
   addToWishlist: (product: any) => void;
-  removeFromWishlist: (product: any) => void;
+  removeFromWishlist: (itemId: number) => void;
   clearWishlist: () => void;
 }
 
@@ -23,15 +21,15 @@ export const useWishlist = () => {
 // todo: add wishlist to local storage
 // todo: sync wishlist to database
 // todo: use optimistic ui updates
-export const WishlistProvider = ({ children, wishlistItems }: { children: ReactNode; wishlistItems: any[] | null }) => {
-  const [wishlist, setWishlist] = useLocalStorage<any[] | null>("wishlist", wishlistItems);
+export const WishlistProvider = ({ children, wishlistItems }: { children: ReactNode; wishlistItems: any[] }) => {
+  const [wishlist, setWishlist] = useState<any[]>(wishlistItems);
 
   const addToWishlist = (product: any) => {
     setWishlist((prevWishlist: any) => [...prevWishlist, product]);
   };
 
-  const removeFromWishlist = (product: any) => {
-    setWishlist((prevWishlist: any) => prevWishlist.filter((item: any) => item.id !== product.id));
+  const removeFromWishlist = (itemId: number) => {
+    setWishlist((prevWishlist: any) => prevWishlist.filter((item: any) => item.id !== itemId));
   };
 
   const clearWishlist = () => {

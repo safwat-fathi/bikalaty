@@ -1,16 +1,17 @@
-import { createContext, ReactNode, useContext, useMemo } from "react";
+import { createContext, ReactNode, useContext, useMemo, useState } from "react";
+import { toast } from "sonner";
 
-import useLocalStorage from "../hooks/useLocalStorage";
+import { CartItem, Product } from "@/types/models/product.model";
 
 type CartProviderContext = {
-  cart: any[];
+  cart: CartItem[];
   cartSubTotal: number;
   cartItemsCount: number;
-  addToCart: (item: any) => void;
-  removeFromCart: (item: any) => void;
+  addToCart: (item: CartItem) => void;
+  removeFromCart: (item: CartItem) => void;
   clearCart: () => void;
-  incrementQuantity: (item: any) => void;
-  decrementQuantity: (item: any) => void;
+  incrementQuantity: (item: Product) => void;
+  decrementQuantity: (item: Product) => void;
 };
 
 const CartContext = createContext<CartProviderContext | null>(null);
@@ -30,19 +31,28 @@ export const CartProvider = ({ children, cartItems }: { children: ReactNode; car
   const itemsCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  const [cart, setCart] = useLocalStorage<any[]>("cart", cartItems);
-  const [cartSubTotal, setCartSubTotal] = useLocalStorage("cartSubTotal", subtotal);
-  const [cartItemsCount, setCartItemsCount] = useLocalStorage("cartItemsCount", itemsCount);
+  const [cart, setCart] = useState<CartItem[]>(cartItems);
+  const [cartSubTotal, setCartSubTotal] = useState(subtotal);
+  const [cartItemsCount, setCartItemsCount] = useState(itemsCount);
 
-  const addToCart = (item: any) => {
+  const addToCart = (item: CartItem) => {
+    // check if already in cart
+    const existingItem = cart.find((cartItem) => cartItem.id === item.id);
+    if (existingItem) {
+      toast.error(`${item.name} is already in your cart`);
+      return;
+    }
+
     setCart([...cart, item]);
     setCartSubTotal(cartSubTotal + item.price);
     setCartItemsCount(cartItemsCount + 1);
+
+    toast.success(`${item.name} added to your cart`);
   };
 
-  const removeFromCart = (selectedItem: any) => {
+  const removeFromCart = (selectedItem: CartItem) => {
     setCart(cart.filter((item) => selectedItem.id !== item.id));
-    setCartSubTotal(cartSubTotal - selectedItem.price);
+    setCartSubTotal(cartSubTotal - selectedItem.price * selectedItem.quantity);
     setCartItemsCount(cartItemsCount - 1);
   };
 
@@ -52,7 +62,7 @@ export const CartProvider = ({ children, cartItems }: { children: ReactNode; car
     setCartItemsCount(0);
   };
 
-  const incrementQuantity = (item: any) => {
+  const incrementQuantity = (item: Product) => {
     const updatedCart = cart.map((cartItem) => {
       if (cartItem.id === item.id) {
         return { ...cartItem, quantity: cartItem.quantity + 1 };
@@ -64,7 +74,7 @@ export const CartProvider = ({ children, cartItems }: { children: ReactNode; car
     setCartItemsCount(updatedCart.reduce((sum, item) => sum + item.quantity, 0));
   };
 
-  const decrementQuantity = (item: any) => {
+  const decrementQuantity = (item: Product) => {
     const updatedCart = cart.map((cartItem) => {
       if (cartItem.id === item.id && cartItem.quantity > 1) {
         return { ...cartItem, quantity: cartItem.quantity - 1 };

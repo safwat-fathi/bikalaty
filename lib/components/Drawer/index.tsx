@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { MouseEventHandler, PropsWithChildren, useEffect, useRef } from "react";
 
 import useIsPageDirectionRTL from "@/lib/hooks/useIsPageDirectionRTL";
+import CloseIcon from "@/lib/icons/CloseIcon";
 
 const DynamicPortal = dynamic(() => import("../Portal"), { ssr: false });
 
@@ -15,9 +16,6 @@ type Props = {
   className?: HTMLDivElement["className"];
   title: string;
 };
-
-const classes: string =
-  "fixed z-999 inset-none bg-[rgba(0,0,0,0.62)] backdrop-blur transition-opacity h-screen duration-300";
 
 const Drawer = ({ isOpen, onClose, isStatic = true, title, className, children }: PropsWithChildren<Props>) => {
   const isRTL = useIsPageDirectionRTL();
@@ -42,10 +40,13 @@ const Drawer = ({ isOpen, onClose, isStatic = true, title, className, children }
       {/* overlay */}
       <div
         ref={overlayRef}
-        className={clsx(classes, {
-          "pointer-events-none opacity-0": !isOpen,
-          "pointer-events-auto opacity-100": isOpen,
-        })}
+        className={clsx(
+          "inset-none fixed z-999 h-screen w-full bg-[rgba(0,0,0,0.62)] backdrop-blur transition-opacity duration-300",
+          {
+            "pointer-events-none opacity-0": !isOpen,
+            "pointer-events-auto opacity-100": isOpen,
+          }
+        )}
         onClick={handleClose}
       >
         {/* drawer */}
@@ -55,32 +56,22 @@ const Drawer = ({ isOpen, onClose, isStatic = true, title, className, children }
             "inset-y-none px-xl fixed w-[300px] transform overflow-y-auto bg-white transition-transform duration-300 md:w-[663px]",
             className,
             {
-              "left-none right-auto": isRTL, // if RTL
-              "right-none left-auto": !isRTL, // if LTR
-              "-translate-x-full": !isOpen && isRTL, // if RTL and not open
-              "translate-x-full": !isOpen && !isRTL, // if LTR and not open
-              "-translate-x-none": isOpen && isRTL, // if RTL and open
-              "translate-x-none": isOpen && !isRTL, // if LTR and open
+              "left-none right-auto": !isRTL,
+              "right-none left-auto": isRTL,
+              "-translate-x-full": !isOpen && !isRTL, // if LTR and not open
+              "translate-x-full": !isOpen && isRTL, // if RTL and not open
+              "-translate-x-none": isOpen && !isRTL, // if LTR and open
+              "translate-x-none": isOpen && isRTL, // if RTL and open
             }
           )}
         >
-          <div className="p-md drawer-title-bg h-7xl flex items-center justify-between">
+          <div className="p-md drawer-title-bg h-7xl mb-4 flex items-center justify-between border-b border-gray-200 px-4">
             <h4 className="text-lg font-bold capitalize">{title}</h4>
             <button
-              className="rounded-full bg-white text-gray-500 transition-all duration-300 hover:text-gray-900 focus:text-gray-900 focus:outline-none"
+              className="cursor-pointer rounded-full bg-white text-gray-500 transition-all duration-300 hover:text-gray-900 focus:text-gray-900 focus:outline-none"
               onClick={onClose}
             >
-              <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="49" height="49" rx="24.5" fill="white" />
-                <path
-                  d="M18.0175 32.2258C17.5235 32.213 17.2476 32.0338 17.09 31.6893C16.9323 31.3448 16.986 31.0129 17.2189 30.7154C17.2602 30.666 17.3042 30.619 17.3508 30.5746C19.106 28.7899 20.8617 27.0059 22.618 25.2225C22.7001 25.139 22.7089 25.1006 22.6213 25.0118C20.8501 23.2173 19.0813 21.4202 17.3149 19.6207C16.9485 19.2481 16.9006 18.7517 17.1915 18.3661C17.2659 18.2661 17.3596 18.1827 17.4669 18.121C17.5742 18.0593 17.6928 18.0206 17.8154 18.0072C17.938 17.9939 18.062 18.0062 18.1797 18.0434C18.2974 18.0806 18.4064 18.1419 18.5 18.2236C18.5547 18.2715 18.6059 18.3254 18.6573 18.3777C20.4032 20.1524 22.1481 21.928 23.892 23.7043C23.9799 23.7939 24.0237 23.7939 24.111 23.7043C25.8733 21.9064 27.6377 20.111 29.4042 18.3179C29.7691 17.947 30.2631 17.8964 30.6388 18.1885C30.7353 18.2626 30.8161 18.3556 30.8766 18.462C30.9371 18.5684 30.9759 18.6861 30.9908 18.8081C31.0057 18.93 30.9964 19.0538 30.9634 19.172C30.9304 19.2902 30.8743 19.4005 30.7987 19.4963C30.7519 19.5531 30.7021 19.6073 30.6495 19.6585C28.8979 21.4393 27.1452 23.2202 25.3913 25.001C25.2952 25.0984 25.3059 25.1401 25.3951 25.2314C27.1631 27.0231 28.9288 28.8168 30.6922 30.6125C30.9596 30.884 31.0663 31.2015 30.9577 31.5744C30.7781 32.1901 30.0436 32.4272 29.5414 32.036C29.4811 31.9868 29.4239 31.9337 29.3703 31.8771C27.6187 30.0963 25.8672 28.3141 24.1156 26.5305C24.0215 26.4345 23.9771 26.4381 23.8849 26.5305C22.1306 28.3228 20.3735 30.1124 18.6135 31.8991C18.4157 32.1006 18.1948 32.2394 18.0175 32.2258Z"
-                  fill="black"
-                />
-                <path
-                  d="M18.0175 32.2258C17.5235 32.213 17.2476 32.0338 17.09 31.6893C16.9323 31.3448 16.986 31.0129 17.2189 30.7154C17.2602 30.666 17.3042 30.619 17.3508 30.5746C19.106 28.7899 20.8617 27.0059 22.618 25.2225C22.7001 25.139 22.7089 25.1006 22.6213 25.0118C20.8501 23.2173 19.0813 21.4202 17.3149 19.6207C16.9485 19.2481 16.9006 18.7517 17.1915 18.3661C17.2659 18.2661 17.3596 18.1827 17.4669 18.121C17.5742 18.0593 17.6928 18.0206 17.8154 18.0072C17.938 17.9939 18.062 18.0062 18.1797 18.0434C18.2974 18.0806 18.4064 18.1419 18.5 18.2236C18.5547 18.2715 18.6059 18.3254 18.6573 18.3777C20.4032 20.1524 22.1481 21.928 23.892 23.7043C23.9799 23.7939 24.0237 23.7939 24.111 23.7043C25.8733 21.9064 27.6377 20.111 29.4042 18.3179C29.7691 17.947 30.2631 17.8964 30.6388 18.1885C30.7353 18.2626 30.8161 18.3556 30.8766 18.462C30.9371 18.5684 30.9759 18.6861 30.9908 18.8081C31.0057 18.93 30.9964 19.0538 30.9634 19.172C30.9304 19.2902 30.8743 19.4005 30.7987 19.4963C30.7519 19.5531 30.7021 19.6073 30.6495 19.6585C28.8979 21.4393 27.1452 23.2202 25.3913 25.001C25.2952 25.0984 25.3059 25.1401 25.3951 25.2314C27.1631 27.0231 28.9288 28.8168 30.6922 30.6125C30.9596 30.884 31.0663 31.2015 30.9577 31.5744C30.7781 32.1901 30.0436 32.4272 29.5414 32.036C29.4811 31.9868 29.4239 31.9337 29.3703 31.8771C27.6187 30.0963 25.8672 28.3141 24.1156 26.5305C24.0215 26.4345 23.9771 26.4381 23.8849 26.5305C22.1306 28.3228 20.3735 30.1124 18.6135 31.8991C18.4157 32.1006 18.1948 32.2394 18.0175 32.2258Z"
-                  fill="black"
-                />
-              </svg>
+              <CloseIcon />
             </button>
           </div>
           <div className="p-md">{children}</div>
