@@ -1,13 +1,14 @@
 import "./globals.css";
 
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Rubik } from "next/font/google";
 import { ReactNode } from "react";
 import { Toaster } from "sonner";
 
 import { getScopedI18n } from "@/locales/server";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin", "latin-ext"], variable: "--font-inter", display: "swap" });
+const rubik = Rubik({ subsets: ["arabic", "latin", "latin-ext"], variable: "--font-rubik", display: "swap" });
 
 export async function generateMetadata(): Promise<Metadata> {
   const tGlobal = await getScopedI18n("global");
@@ -27,18 +28,19 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({
-  children,
   params,
+  children,
 }: Readonly<{
   params: Promise<{ locale: string }>;
+
   children: ReactNode;
 }>) {
   const { locale } = await params;
-  const dir = locale === "ar" ? "rtl" : "ltr";
+  // const dir = locale === "ar" ? "rtl" : "ltr";
 
   return (
-    <html lang={locale} dir={dir} translate="no">
-      <body className={inter.className}>
+    <html lang={locale}>
+      <body className={`${inter.className} ${rubik.className}`}>
         {children}
         <Toaster />
       </body>

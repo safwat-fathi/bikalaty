@@ -14,6 +14,7 @@ import WishlistPreview from "../WishlistPreview";
 import SearchInput from "./SearchInput";
 const Drawer = dynamic(() => import("../Drawer"), { ssr: false });
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { useState } from "react";
 
 import HomeIcon from "@/lib/icons/HomeIcon";
@@ -67,8 +68,16 @@ const Navbar = () => {
             <Button className="btn-sm md:hidden" onClick={toggleMenu}>
               <BurgerMenuIcon />
             </Button>
-            <Link href="/" className="text-xl font-bold">
-              Bikalaty
+
+            <Link href="/" className="h-10 w-10 overflow-hidden text-xl font-bold">
+              <Image
+                src="/bikalaty-logo-nobg.png"
+                alt="bikalaty"
+                className="scale-150 object-cover"
+                width={70}
+                height={70}
+                priority
+              />
             </Link>
           </div>
 
