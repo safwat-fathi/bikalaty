@@ -37,7 +37,15 @@ const eslintConfig = [
 
     // Your custom rules + manually added security rules
     rules: {
-      "@typescript-eslint/no-unused-vars": "error",
+      "sonarjs/todo-tag": "warn",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
       "@typescript-eslint/no-explicit-any": "warn",
       "no-console": "error",
       "simple-import-sort/imports": "error",

@@ -1,6 +1,6 @@
 const ar = {
-  title: "سوبر ماركت",
-  description: "تطبيق سوبر ماركت",
+  title: "بقالتي",
+  description: "بقالتي هو متجر للمنتجات الغذائية",
   hello: "أهلا {name}!",
   welcome: "مرحبا",
   ar: "العربية",

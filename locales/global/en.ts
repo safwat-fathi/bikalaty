@@ -1,6 +1,6 @@
 const en = {
-  title: "Super Market",
-  description: "Super Market App",
+  title: "Bikalaty",
+  description: "A grocery store",
   hello: "Hello {name}!",
   welcome: "Welcome",
   ar: "Arabic",

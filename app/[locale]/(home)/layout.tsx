@@ -105,21 +105,21 @@ const cartItems = [
 
 export default async function HomeLayout({
   params,
-  modal,
+  productModal,
   children,
 }: Readonly<{
   children: ReactNode;
-  modal: ReactNode;
+  productModal: ReactNode;
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
 
   return (
     <Providers locale={locale} cartItems={cartItems} wishlistItems={wishlistItems}>
-      <div className="relative" id="portal" />
       <Navbar />
       {children}
-      {modal}
+      {productModal}
+      <div className="relative" id="portal" />
       <div id="modal-root" />
       <Footer />
     </Providers>
