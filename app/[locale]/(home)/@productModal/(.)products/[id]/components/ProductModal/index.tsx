@@ -18,7 +18,7 @@ export function ProductModal({ children }: { children: ReactNode }) {
     // Store the original style *before* changing it
     originalOverflowRef.current = document.body.style.overflow;
     // Prevent body scrolling
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
 
     if (!dialogRef.current?.open) {
       dialogRef.current?.showModal();
@@ -26,7 +26,7 @@ export function ProductModal({ children }: { children: ReactNode }) {
 
     // Cleanup function: Restore original body scroll on unmount
     return () => {
-      document.body.style.overflow = originalOverflowRef.current; // Restore the exact previous value
+      // document.body.style.overflow = originalOverflowRef.current; // Restore the exact previous value
     };
   }, []);
 

@@ -20,6 +20,33 @@ interface ProductCardProps {
   product: Product;
 }
 
+const WHOLE_SALE_THRESHOLD = 10;
+const RETAIL_THRESHOLD = 5;
+const WHOLE_SALE_DISCOUNT = 0.7;
+const RETAIL_DISCOUNT = 0.85;
+
+const getMinQty = (userType: UserType, product: Product) => {
+  switch (userType) {
+    case UserType.Wholesaler:
+      return product.minWholesaleQty || WHOLE_SALE_THRESHOLD;
+    case UserType.Retailer:
+      return product.minRetailQty || RETAIL_THRESHOLD;
+    default:
+      return 1;
+  }
+};
+
+const getPrice = (userType: UserType, product: Product) => {
+  switch (userType) {
+    case UserType.Wholesaler:
+      return product.wholesalePrice || product.price * WHOLE_SALE_DISCOUNT; // 30% discount for wholesalers
+    case UserType.Retailer:
+      return product.retailPrice || product.price * RETAIL_DISCOUNT; // 15% discount for retailers
+    default:
+      return product.price;
+  }
+};
+
 const ProductCard = ({ product }: ProductCardProps) => {
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const { addToCart } = useCart();
@@ -54,37 +81,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
     addToCart(newCartItem);
   };
 
-  // Calculate price based on user type
-  const getPrice = () => {
-    switch (userType) {
-      case UserType.Wholesaler:
-        return product.wholesalePrice || product.price * 0.7; // 30% discount for wholesalers
-      case UserType.Retailer:
-        return product.retailPrice || product.price * 0.85; // 15% discount for retailers
-      default:
-        return product.price;
-    }
-  };
-
-  // Get minimum quantity based on user type
-  const getMinQty = () => {
-    switch (userType) {
-      case UserType.Wholesaler:
-        return product.minWholesaleQty || 10;
-      case UserType.Retailer:
-        return product.minRetailQty || 5;
-      default:
-        return 1;
-    }
-  };
-
   // Show appropriate badges based on user type
   const showMinimumQtyBadge = userType !== UserType.Customer;
 
-  const currentPrice = getPrice();
-  const minQty = getMinQty();
+  const currentPrice = getPrice(userType, product);
+  const minQty = getMinQty(userType, product);
 
-  // todo: use Intercepting Routes to show product details in modal
+  // TODO: use Intercepting Routes to show product details in modal
   return (
     <div className="group animate-fadeIn overflow-hidden rounded-lg bg-white shadow-sm transition-shadow duration-300 hover:shadow-md">
       <div className="relative">

@@ -15,6 +15,10 @@ const featuredProducts: Product[] = [
     image:
       "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmFuYW5hfGVufDB8fDB8fHww",
     rating: 4.5,
+    brand: "Organic Bananas",
+    description: "Fresh, organic bananas from local farmers.",
+    slug: "organic-bananas",
+    isNew: true,
     category: fruitsAndVegetables,
     unit: "bunch",
     wholesalePrice: 2.09,
@@ -29,6 +33,9 @@ const featuredProducts: Product[] = [
     image:
       "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fG1pbGt8ZW58MHx8MHx8fDA%3D",
     rating: 4.7,
+    brand: "Fresh Whole Milk",
+    description: "Fresh, whole milk from local farmers.",
+    slug: "fresh-whole-milk",
     category: "Dairy & Eggs",
     unit: "gallon",
     isNew: true,
@@ -45,6 +52,9 @@ const featuredProducts: Product[] = [
     discount: 14,
     image:
       "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnJlYWR8ZW58MHx8MHx8fDA%3D",
+    brand: "Whole Wheat Bread",
+    description: "Fresh, whole wheat bread from local farmers.",
+    slug: "whole-wheat-bread",
     rating: 4.3,
     category: "Bakery",
     unit: "loaf",
@@ -55,6 +65,9 @@ const featuredProducts: Product[] = [
     price: 5.99,
     image:
       "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWdnc3xlbnwwfHwwfHx8MA%3D%3D",
+    brand: "Free Range Eggs",
+    description: "Fresh, free range eggs from local farmers.",
+    slug: "free-range-eggs",
     rating: 4.8,
     category: "Dairy & Eggs",
     unit: "dozen",
@@ -66,6 +79,9 @@ const featuredProducts: Product[] = [
     price: 12.99,
     originalPrice: 14.99,
     discount: 13,
+    slug: "atlantic-salmon-fillet",
+    description: "Fresh, Atlantic salmon fillet from local farmers.",
+    brand: "Atlantic Salmon Fillet",
     image:
       "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2FsbW9ufGVufDB8fDB8fHww",
     rating: 4.6,
@@ -75,6 +91,9 @@ const featuredProducts: Product[] = [
   {
     id: 6,
     name: "Organic Avocados",
+    slug: "organic-avocados",
+    description: "Fresh, organic avocados from local farmers.",
+    brand: "Organic Avocados",
     price: 6.99,
     image:
       "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZvY2Fkb3xlbnwwfHwwfHx8MA%3D%3D",
@@ -86,6 +105,9 @@ const featuredProducts: Product[] = [
   {
     id: 7,
     name: "Fresh Blueberries",
+    slug: "fresh-blueberries",
+    description: "Fresh, fresh blueberries from local farmers.",
+    brand: "Fresh Blueberries",
     price: 4.99,
     originalPrice: 5.99,
     discount: 17,
@@ -98,6 +120,9 @@ const featuredProducts: Product[] = [
   {
     id: 8,
     name: "Sourdough Bread",
+    slug: "sourdough-bread",
+    description: "Fresh, sourdough bread from local farmers.",
+    brand: "Sourdough Bread",
     price: 5.49,
     image: null,
     rating: 4.7,
@@ -106,7 +131,7 @@ const featuredProducts: Product[] = [
   },
 ];
 
-const FeaturedProductsCard = () => {
+const FeaturedProducts = () => {
   return (
     <section className="bg-gray-50 py-12">
       <div className="container mx-auto">
@@ -126,4 +151,4 @@ const FeaturedProductsCard = () => {
   );
 };
 
-export default FeaturedProductsCard;
+export default FeaturedProducts;

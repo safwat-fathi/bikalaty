@@ -119,8 +119,7 @@ export default async function HomeLayout({
       <Navbar />
       {children}
       {productModal}
-      <div className="relative" id="portal" />
-      <div id="modal-root" />
+      {/* <div id="modal-root" /> */}
       <Footer />
     </Providers>
   );

@@ -19,34 +19,41 @@ import { useState } from "react";
 
 import HomeIcon from "@/lib/icons/HomeIcon";
 
+import { NavLink } from "../NavLink";
+
 // grocery store categories
-const categories = [
+const categories: { name: string; slug: string }[] = [
   {
-    name: "grocery",
+    name: "Fresh Vegetables",
+    slug: "fresh-vegetables",
   },
   {
-    name: "frozen",
+    slug: "dairy-eggs",
+    name: "Dairy & Eggs",
   },
   {
-    name: "meat",
+    slug: "meat",
+    name: "Meat & Seafood",
   },
   {
-    name: "dairy",
+    slug: "bakery",
+    name: "Bakery",
   },
   {
-    name: "bakery",
+    slug: "produce",
+    name: "Produce",
   },
   {
-    name: "produce",
+    slug: "beverages",
+    name: "Beverages",
   },
   {
-    name: "beverages",
+    slug: "snacks",
+    name: "Snacks",
   },
   {
-    name: "snacks",
-  },
-  {
-    name: "pets",
+    slug: "pets",
+    name: "Pets",
   },
 ];
 
@@ -62,7 +69,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-base-100 sticky top-0 z-50 flex flex-col justify-center gap-4 px-0 py-4">
+      <nav className="bg-base-100 sticky top-0 z-50 flex flex-col justify-center gap-4 px-0 pt-4">
         <div className="container mx-auto flex w-full items-center justify-between p-2">
           <div className="flex items-center gap-2">
             <Button className="btn-sm md:hidden" onClick={toggleMenu}>
@@ -139,18 +146,18 @@ const Navbar = () => {
         </div>
         <div className="hidden h-[1px] w-full bg-gray-200 md:flex" />
         <div className="container mx-auto hidden w-full gap-4 py-1 md:flex">
-          <Link href="/" className="link link-hover hover:text-primary flex items-center gap-1">
+          <NavLink href="/" className="link link-hover hover:text-primary flex items-center gap-1">
             <HomeIcon />
             Home
-          </Link>
+          </NavLink>
           {categories.map((category) => (
-            <Link
+            <NavLink
               key={category.name}
-              href={`/categories/${category.name}`}
+              href={`/categories/${category.slug}`}
               className="link link-hover hover:text-primary capitalize"
             >
               {category.name}
-            </Link>
+            </NavLink>
           ))}
         </div>
         <div className="h-[1px] w-full bg-gray-200" />
@@ -158,35 +165,99 @@ const Navbar = () => {
           <SearchInput />
         </div>
       </nav>
-      <Drawer title="Menu" isOpen={isOpen} onClose={toggleMenu} isStatic={false}>
-        <div className="flex h-screen flex-col gap-4 px-4">
-          <Link href="/" className="link link-hover hover:text-primary">
-            Home
-          </Link>
-          <Link href="/products" className="link link-hover hover:text-primary">
-            Products
-          </Link>
-          <Link href="/about" className="link link-hover hover:text-primary">
-            About
-          </Link>
-          <Link href="/contact" className="link link-hover hover:text-primary">
-            Contact
-          </Link>
-          <Link href="/blog" className="link link-hover hover:text-primary">
-            Blog
-          </Link>
-          <Link href="/cart" className="link link-hover hover:text-primary">
-            Cart
-          </Link>
-          <Link href="/wishlist" className="link link-hover hover:text-primary">
-            Wishlist
-          </Link>
-          <Link href="/login" className="link link-hover hover:text-primary">
-            Login
-          </Link>
-          <Link href="/register" className="link link-hover hover:text-primary">
-            Register
-          </Link>
+      <Drawer title="Menu" isOpen={isOpen} onClose={toggleMenu}>
+        <div className="mb-8 flex h-screen flex-col gap-4 overflow-y-auto">
+          <div className="flex flex-col gap-2 px-4">
+            <h4 className="text-md font-semibold">Categories</h4>
+            <Link href="/" className="link link-hover hover:text-primary">
+              Home
+            </Link>
+            <Link href="/products" className="link link-hover hover:text-primary">
+              Products
+            </Link>
+            <Link href="/about" className="link link-hover hover:text-primary">
+              About
+            </Link>
+            <Link href="/contact" className="link link-hover hover:text-primary">
+              Contact
+            </Link>
+            <Link href="/blog" className="link link-hover hover:text-primary">
+              Blog
+            </Link>
+            <Link href="/cart" className="link link-hover hover:text-primary">
+              Cart
+            </Link>
+            <Link href="/wishlist" className="link link-hover hover:text-primary">
+              Wishlist
+            </Link>
+            <Link href="/login" className="link link-hover hover:text-primary">
+              Login
+            </Link>
+            <Link href="/register" className="link link-hover hover:text-primary">
+              Register
+            </Link>
+          </div>
+          <div className="border-b border-gray-200"></div>
+          <div className="flex flex-col gap-2 px-4">
+            <h4 className="text-md font-semibold">Profile</h4>
+            <Link href="/" className="link link-hover hover:text-primary">
+              settings
+            </Link>
+            <Link href="/products" className="link link-hover hover:text-primary">
+              My Account
+            </Link>
+            <Link href="/about" className="link link-hover hover:text-primary">
+              Logout
+            </Link>
+          </div>
+          <div className="flex flex-col gap-2 px-4">
+            <h4 className="text-md font-semibold">Profile</h4>
+            <Link href="/" className="link link-hover hover:text-primary">
+              settings
+            </Link>
+            <Link href="/products" className="link link-hover hover:text-primary">
+              My Account
+            </Link>
+            <Link href="/about" className="link link-hover hover:text-primary">
+              Logout
+            </Link>
+          </div>
+          <div className="flex flex-col gap-2 px-4">
+            <h4 className="text-md font-semibold">Profile</h4>
+            <Link href="/" className="link link-hover hover:text-primary">
+              settings
+            </Link>
+            <Link href="/products" className="link link-hover hover:text-primary">
+              My Account
+            </Link>
+            <Link href="/about" className="link link-hover hover:text-primary">
+              Logout
+            </Link>
+          </div>
+          <div className="flex flex-col gap-2 px-4">
+            <h4 className="text-md font-semibold">Profile</h4>
+            <Link href="/" className="link link-hover hover:text-primary">
+              settings
+            </Link>
+            <Link href="/products" className="link link-hover hover:text-primary">
+              My Account
+            </Link>
+            <Link href="/about" className="link link-hover hover:text-primary">
+              Logout
+            </Link>
+          </div>
+          <div className="flex flex-col gap-2 px-4">
+            <h4 className="text-md font-semibold">Profile</h4>
+            <Link href="/" className="link link-hover hover:text-primary">
+              settings
+            </Link>
+            <Link href="/products" className="link link-hover hover:text-primary">
+              My Account
+            </Link>
+            <Link href="/about" className="link link-hover hover:text-primary">
+              Logout
+            </Link>
+          </div>
         </div>
       </Drawer>
     </>

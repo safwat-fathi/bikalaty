@@ -35,13 +35,13 @@ export default async function RootLayout({
   children: ReactNode;
 }>) {
   const { locale } = await params;
-  // const dir = locale === "ar" ? "rtl" : "ltr";
 
   return (
     <html lang={locale}>
       <body className={`${inter.className} ${rubik.className}`}>
         {children}
         <Toaster />
+        <div className="absolute top-0 left-0" id="portal" />
       </body>
     </html>
   );

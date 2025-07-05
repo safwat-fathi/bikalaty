@@ -2,6 +2,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { AddToCartButton } from "@/lib/components/AddToCartButton";
+import { JsonLd } from "@/lib/components/JsonLd";
 import { QuantitySelector } from "@/lib/components/QuantitySelector";
 
 import { ProductModal } from "../ProductModal";
@@ -66,7 +67,7 @@ async function getProductById(_id: string): Promise<Product | null> {
 
 // --- SEO: Structured Data Function ---
 function generateProductJsonLd(product: Product) {
-  const productSchema = {
+  return {
     "@context": "https://schema.org/",
     "@type": "Product",
     name: product.name,
@@ -106,8 +107,6 @@ function generateProductJsonLd(product: Product) {
       availability: product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
     },
   };
-
-  return JSON.stringify(productSchema);
 }
 
 export async function ProductDetails({ productId }: { productId: string }) {
@@ -123,8 +122,7 @@ export async function ProductDetails({ productId }: { productId: string }) {
 
   return (
     <ProductModal>
-      {/* Structured Data for SEO */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: generateProductJsonLd(product) }} />
+      <JsonLd data={generateProductJsonLd(product)} />
 
       <div className="flex flex-col gap-6 md:flex-row lg:gap-8">
         {/* Product Image Column */}

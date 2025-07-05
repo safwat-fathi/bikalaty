@@ -53,7 +53,7 @@ const Drawer = ({ isOpen, onClose, isStatic = true, title, className, children }
         <div
           role="alert"
           className={clsx(
-            "inset-y-none px-xl fixed w-[300px] transform overflow-y-auto bg-white transition-transform duration-300 md:w-[663px]",
+            "inset-y-none px-xl fixed w-[300px] transform bg-white transition-transform duration-300 md:w-[663px]",
             className,
             {
               "left-none right-auto": !isRTL,
